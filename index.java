@@ -8,8 +8,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import java.util.HashMap;
-
 public class index<K, V> {
 
     public PriorityQueue organizeInput(String filename) throws FileNotFoundException {
@@ -21,8 +19,8 @@ public class index<K, V> {
      * Returns: a PriorityQueue object which holds every character and their
      *              frequencies from the given file
      */
-        // hashmap to hold characters and frequencies
-        HashMap<Character,Integer> dict = new HashMap<>();
+        // priority queue to hold Nodes
+        PriorityQueue pQueue = new PriorityQueue();
 
         // read in the file
         File myFile = new File(filename);
@@ -35,17 +33,12 @@ public class index<K, V> {
             // loop through every character in the current line
             for (int i = 0; i < data.length(); i++){
                 char letter = data.charAt(i);
-                // add the current character to the hashmap
-                if (dict.get(letter) == null) {dict.put(letter, 0); }
-                dict.put(letter, dict.get(letter) + 1);
+                Node maybe = pQueue.find(letter);
+                // check if the letter already exists in the queue
+                if (maybe == null)
+                    pQueue.enqueue(new Node(letter, 0));
+                else { maybe.frequency++;}
             }
-        }
-
-        // add every key-value pair to a priority queue
-        PriorityQueue pQueue = new PriorityQueue();
-        for (Character c : dict.keySet()) {
-            Node cur = new Node(c, dict.get(c));
-            pQueue.enqueue(cur);
         }
 
         myReader.close();

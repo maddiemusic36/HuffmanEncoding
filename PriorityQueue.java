@@ -298,6 +298,24 @@ public class PriorityQueue {
         else { throw new NullPointerException(); }
     }
 
+    public Node find(char c) {
+    /**
+     * This method searches through the heap looking for a Node with the
+     * given key. If the Node is found, it retuns it. Otherwise, the method
+     * returns null.
+     * Args: c, which is a character to be found in the heap
+     * Returns: the Node object in the heap with the given character
+     */
+        // loop through the heap
+        for (Node n : pQueue.heap) {
+            if (n.key == c) {
+                return n;
+            }
+        }
+        // if it was not found, return null
+        return null;
+    }
+
     boolean isEmpty() {
     /**
      * This method determines if the queue is empty by checking if its size
