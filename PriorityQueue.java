@@ -22,7 +22,7 @@ public class PriorityQueue {
      */
 
         // declare the Heap class variables
-        ArrayList<Node> heap;
+        Node[] heap;
         int size;
 
         MaxHeap() {
@@ -31,7 +31,7 @@ public class PriorityQueue {
          * objects. It also sets the size variable to 0, reflecting the
          * emptiness of the Heap.
          */
-            heap = new ArrayList<>(26);
+            heap = new Node[26];
             size = 0; 
         }
 
@@ -76,13 +76,13 @@ public class PriorityQueue {
          */
             // check that the index is not the top of the heap
             if (i > 1) {
-                Node bubbleNode = heap.get(i);
-                Node currParent = heap.get(parent(i));
+                Node bubbleNode = heap[i];
+                Node currParent = heap[parent(i)];
                 // check if a swap is needed by comparing frequencies
                 if (bubbleNode.frequency > currParent.frequency) {
                     // swap the index and its lower frequency parent
-                    heap.set(parent(i), bubbleNode);
-                    heap.set(i, currParent);
+                    heap[parent(i)] =  bubbleNode;
+                    heap[i] = currParent;
                     // recurse
                     bubbleUp(parent(i));
                 }
@@ -98,7 +98,7 @@ public class PriorityQueue {
          * @param  i  an integer representing an index of a Node in the heap
          * @return    void
          */
-            Node bubbleNode = heap.get(i);
+            Node bubbleNode = heap[i];
 
             // check for a left child (left = 2i)
             boolean hasLeft = false;
@@ -115,12 +115,12 @@ public class PriorityQueue {
 
             // if the element only has a left child
             else if (hasLeft && !hasRight) {
-                Node left = heap.get(leftIdx);
+                Node left = heap[leftIdx];
                 // if the left child is greater
                 if (left.frequency > bubbleNode.frequency) {
                     // swap the element with its left child
-                    heap.set(i, left);
-                    heap.set(leftIdx, bubbleNode);
+                    heap[i] = left;
+                    heap[leftIdx] = bubbleNode;
                     // recurse
                     bubbleDown(leftIdx);
                 }
@@ -128,12 +128,12 @@ public class PriorityQueue {
 
             // if the element only has a right child
             else if (!hasLeft && hasRight) {
-                Node right = heap.get(rightIdx);
+                Node right = heap[rightIdx];
                 // if the right child is greater
                 if (right.frequency > bubbleNode.frequency) {
                     // swap the element with its right child
-                    heap.set(i, right);
-                    heap.set(rightIdx, bubbleNode);
+                    heap[i] = right;
+                    heap[rightIdx] = bubbleNode;
                     // recurse
                     bubbleDown(rightIdx);
                 }
@@ -143,18 +143,18 @@ public class PriorityQueue {
             else if (hasLeft && hasRight) {
                 // find the index of the higher frequency child
                 int higherFrequencyChildIdx = left(i);
-                if (heap.get(right(i)).frequency > heap.get(left(i)).frequency) {
+                if (heap[right(i)].frequency > heap[left(i)].frequency) {
                     higherFrequencyChildIdx = right(i);
                 }
 
                 // get the higher frequency child
-                Node child = heap.get(higherFrequencyChildIdx);
+                Node child = heap[higherFrequencyChildIdx];
 
                 // check if a swap is needed by comparing frequencies
                 if (bubbleNode.frequency < child.frequency) {
                     // swap the index with its child of higher frequency
-                    heap.set(higherFrequencyChildIdx, bubbleNode);;
-                    heap.set(i, child);
+                    heap[higherFrequencyChildIdx] =  bubbleNode;
+                    heap[i] = child;
                     // recurse
                     bubbleDown(higherFrequencyChildIdx);
                 }
@@ -170,10 +170,10 @@ public class PriorityQueue {
          * @return    void
          */
             // resize the array to twice its size if necessary
-            if ( (size + 1) >= heap.size()) { resize(2 * heap.size()); }
+            if ( (size + 1) >= heap.length) { resize(2 * heap.length); }
             size++;
             // add the new element to the end of the array and bubble it up
-            heap.set(size, n);
+            heap[size] = n;
             bubbleUp(size);
         }
 
@@ -185,12 +185,12 @@ public class PriorityQueue {
          * @param  capacity  An integer specifying the length of the new array
          * @return           void
          */
-            ArrayList<Node> temp = new ArrayList<>(capacity);
+            Node[] temp = new Node[capacity];
             // assign size to the lesser value between capacity and size
             size = capacity < size ? capacity : size;
             for (int i = 0; i < size; i++) {
                 // add each value in the original array to the new array
-                temp.set(i, heap.get(i));
+                temp[i] = heap[i];
             }
             heap = temp;
         }
@@ -208,10 +208,10 @@ public class PriorityQueue {
             if (isEmpty()) { return null; }
 
             // get the Node that will be removed from the top of the heap
-            Node removed = heap.get(1);
+            Node removed = heap[1];
             // move the largest index (lowest priority) to the top
-            heap.set(1, heap.get(size));
-            heap.set(size, null);
+            heap[1] =  heap[size];
+            heap[size] = null;
             size--;
             // bubble down the heap to rearrange the values where necessary
             bubbleDown(1);
@@ -240,7 +240,7 @@ public class PriorityQueue {
             // iterate through the heap
             for (int i = 1; i <= size; i++) {
                 // add a comma before the next value unless it's the first element
-                s += (i == 1 ? "" : ", ") + heap.get(i);
+                s += (i == 1 ? "" : ", ") + heap[i];
             }
             s += "}";
             return s;
@@ -294,7 +294,7 @@ public class PriorityQueue {
      */
         // check if the queue is empty
         if ( !(pQueue.isEmpty()) ) {
-            Node frontNode = (pQueue.heap).get(1);
+            Node frontNode = (pQueue.heap)[1];
             return frontNode;
         }
         else { throw new NullPointerException(); }

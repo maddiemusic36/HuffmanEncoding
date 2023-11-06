@@ -18,14 +18,17 @@ public class index<K, V> {
      * frequency of each character, and creates a priority queue of said
      * frequencies.
      * Args: filename, which is a string representing the name of a file
-     * Returns: ______
+     * Returns: a PriorityQueue object which holds every character and their
+     *              frequencies from the given file
      */
         // hashmap to hold characters and frequencies
         HashMap<Character,Integer> dict = new HashMap<>();
+
         // read in the file
         File myFile = new File(filename);
         Scanner myReader;
         myReader = new Scanner(myFile);
+        
         // loop through every line in the file
         while (myReader.hasNextLine()) {
             String data = myReader.nextLine();
