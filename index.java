@@ -42,7 +42,7 @@ public class index<K, V> {
      * Args: fileString, which is the contents of a text file as a string
      * Returns: an integer representing the size of the input
      */
-        return 0;
+        return fileString.length() * 8;
     }
 
     public int outputSize(Huffman<K,V> tree, String code) {
@@ -66,5 +66,14 @@ public class index<K, V> {
      *      code, which is a string representing the encoded input data
      */
         return "";
+    }
+
+    public static void test() {
+        // read the input file
+        // determine the size of the input
+        // convert the data of the input into a priority queue
+        // create the huffman tree
+        // create the encoding
+        // determine the size of the encoding and the tree
     }
 }

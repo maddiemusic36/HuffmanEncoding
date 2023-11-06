@@ -1,7 +1,7 @@
 public class Huffman<K,V> {
     
     private int size;
-    private Node<K,V> root;
+    private Node root;
 
     Huffman() {
         this.size = 0;
@@ -15,17 +15,21 @@ public class Huffman<K,V> {
     ///// function to print the tree \\\\\
 }
 
-class Node<K,V> {
+class Node {
     String key;
-    int val;
-    Node<K,V> left;
-    Node<K,V> right;
+    int frequency;
+    Node left;
+    Node right;
 
     Node(String key, int value) {
         this.key = key;
-        this.val = value;
+        this.frequency = value;
         this.left = null;
         this.right = null;
+    }
+
+    public String toString() {
+        return "(" + key + ", " + frequency + ")";
     }
 }
 
