@@ -3,19 +3,16 @@
  * Authors: Madeline DeLeon, Billy Dolny, Savannah Rabasa, Julia Ryan
 */
 
-/**
- * This is so slay if this works
- */
-
 // for file reading
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+import java.util.HashMap;
 
 public class index<K, V> {
 
-    public void organizeInput(String filename) throws FileNotFoundException {
+    public PriorityQueue organizeInput(String filename) throws FileNotFoundException {
     /**
      * This function reads in the text from the given file, counts the
      * frequency of each character, and creates a priority queue of said
@@ -23,16 +20,35 @@ public class index<K, V> {
      * Args: filename, which is a string representing the name of a file
      * Returns: ______
      */
+        // hashmap to hold characters and frequencies
+        HashMap<Character,Integer> dict = new HashMap<>();
+        // read in the file
         File myFile = new File(filename);
         Scanner myReader;
-            myReader = new Scanner(myFile);
+        myReader = new Scanner(myFile);
+        // loop through every line in the file
         while (myReader.hasNextLine()) {
             String data = myReader.nextLine();
+            // loop through every character in the current line
             for (int i = 0; i < data.length(); i++){
                 char letter = data.charAt(i);
-                createNode(letter); // MUST CREATE A FUNCTION TO CHECK IF NODE IS ALREADY MADE
+                // add the current character to the hashmap
+                if (dict.get(letter) == null) {dict.put(letter, 0); }
+                dict.put(letter, dict.get(letter) + 1);
             }
         }
+
+        // add every key-value pair to a priority queue
+        PriorityQueue pQueue = new PriorityQueue();
+        for (Character c : dict.keySet()) {
+            Node cur = new Node(c, dict.get(c));
+            pQueue.enqueue(cur);
+        }
+
+        myReader.close();
+
+        return pQueue;
+
     }
 
     public int inputSize(String fileString) {
@@ -43,6 +59,10 @@ public class index<K, V> {
      * Returns: an integer representing the size of the input
      */
         return fileString.length() * 8;
+    }
+
+    public void createTree() {
+        //////////
     }
 
     public int outputSize(Huffman<K,V> tree, String code) {

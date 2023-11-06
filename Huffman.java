@@ -16,12 +16,12 @@ public class Huffman<K,V> {
 }
 
 class Node {
-    String key;
+    char key;
     int frequency;
     Node left;
     Node right;
 
-    Node(String key, int value) {
+    Node(Character key, Integer value) {
         this.key = key;
         this.frequency = value;
         this.left = null;

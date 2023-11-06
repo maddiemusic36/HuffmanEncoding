@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class PriorityQueue<K, V> {
+public class PriorityQueue {
 /**
  * This class represents a Priority Queue. Just like a regular queue, this
  * class follows the First in First out procedure. However, items can move up
@@ -99,12 +99,51 @@ public class PriorityQueue<K, V> {
          * @return    void
          */
             Node bubbleNode = heap.get(i);
-            // check that the index has a left child
-            if (left(i) <= size) {
 
+            // check for a left child (left = 2i)
+            boolean hasLeft = false;
+            int leftIdx = left(i);
+            if (leftIdx >= size && leftIdx < 1) { hasLeft = true; }
+
+            // check for a right child (right = 2i + 1)
+            boolean hasRight = false;
+            int rightIdx = right(i);
+            if (rightIdx >= size && rightIdx < 1) { hasRight = true; }
+
+            // if the element has no children
+            if (!hasLeft && !hasRight) { return; }
+
+            // if the element only has a left child
+            else if (hasLeft && !hasRight) {
+                Node left = heap.get(leftIdx);
+                // if the left child is greater
+                if (left.frequency > bubbleNode.frequency) {
+                    // swap the element with its left child
+                    heap.set(i, left);
+                    heap.set(leftIdx, bubbleNode);
+                    // recurse
+                    bubbleDown(leftIdx);
+                }
+            }
+
+            // if the element only has a right child
+            else if (!hasLeft && hasRight) {
+                Node right = heap.get(rightIdx);
+                // if the right child is greater
+                if (right.frequency > bubbleNode.frequency) {
+                    // swap the element with its right child
+                    heap.set(i, right);
+                    heap.set(rightIdx, bubbleNode);
+                    // recurse
+                    bubbleDown(rightIdx);
+                }
+            }
+
+            // if the element has two children
+            else if (hasLeft && hasRight) {
                 // find the index of the higher frequency child
                 int higherFrequencyChildIdx = left(i);
-                if (right(i) <= size && heap.get(right(i)).frequency > heap.get(left(i)).frequency) {
+                if (heap.get(right(i)).frequency > heap.get(left(i)).frequency) {
                     higherFrequencyChildIdx = right(i);
                 }
 
@@ -259,66 +298,6 @@ public class PriorityQueue<K, V> {
             return frontNode;
         }
         else { throw new NullPointerException(); }
-    }
-
-    int peekPriority() throws Exception {
-        /**
-         * This method returns the priority of the Node at the front of the queue
-         * without dequeueing them. If the queue is empty, this method throws a 
-         * Null Pointer Exception becuase you can't peek into an empty queue.
-         * @param   none
-         * @return  the priority of the Node at the front of the queue
-         */
-        // check if the queue is empty
-        if ( !(pQueue.isEmpty())) {
-            Node frontNode = (pQueue.heap).get(1);
-            return frontNode.frequency;
-        }
-        else { throw new NullPointerException(); }
-    }
-
-    void changePriority(String name, int newPriority) {
-    /**
-     * This method changes the priority of the Node in the queue with the given
-     * name. If this change increases the priority, the Node is bubbled up. If
-     * it decreases the priority, the Node is bubbled down. Otherwise, nothing
-     * happens. If there are multiple paitents with the same name, this method
-     * only affects the priority of the first person found. If there is no Node
-     * in the queue with that name, this method does nothing.
-     * @param  name         the key of a Node in the queue
-     * @param  newPriority  the new priority number
-     * @return              void
-     */
-        // iterate through the heap and find the given name (if it exists)
-        Node changeNode = null;
-        int changeNodeIdx = 0;
-        ArrayList<Node> heap = pQueue.heap;
-        for (int i = 1; i < heap.size(); i++) {
-            // if the name is found in the queue
-            if (heap.get(i).key == name) {
-                // get the Node and its index
-                changeNode = heap.get(i);
-                changeNodeIdx = i;
-                break;
-            }
-        }
-
-        // if a patient with that name is found, change their priority
-        if (changeNode != null) {
-            // if the new priority is higher than the old priority
-            if (newPriority > changeNode.frequency) {
-                // change the priority number and bubble the Patient up
-                changeNode.frequency = newPriority;
-                pQueue.bubbleUp(changeNodeIdx);
-            }
-
-            // if the new priority is lower than the old priority
-            else if (newPriority < changeNode.frequency) {
-                // change the priority number and bubble the Patient down
-                changeNode.frequency = newPriority;
-                pQueue.bubbleDown(changeNodeIdx);
-            }
-        }
     }
 
     boolean isEmpty() {
