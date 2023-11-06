@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class PriorityQueue {
 /**
  * This class represents a Priority Queue. Just like a regular queue, this
