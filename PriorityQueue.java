@@ -8,14 +8,14 @@ public class PriorityQueue {
  */
 
     // priority queue class variables
-    MaxHeap pQueue;
+    MinHeap pQueue;
     int size;
 
-    private class MaxHeap {
+    private class MinHeap {
     /**
-     * This class represents a Binary Max-Heap. It utilizes an array list to
-     * hold Node objects. As per the definition of Max-Heaps, Nodes with a
-     * higher frequency number belong higher on the heap. This class has
+     * This class represents a Binary Min-Heap. It utilizes an array list to
+     * hold Node objects. As per the definition of Min-Heaps, Nodes with a
+     * lower frequency number belong higher on the heap. This class has
      * several methods to manipulate and interact with the Heap.
      */
 
@@ -23,7 +23,7 @@ public class PriorityQueue {
         Node[] heap;
         int size;
 
-        MaxHeap() {
+        MinHeap() {
         /**
          * This constructor creates an array list of size 26 which holds Node
          * objects. It also sets the size variable to 0, reflecting the
@@ -77,8 +77,8 @@ public class PriorityQueue {
                 Node bubbleNode = heap[i];
                 Node currParent = heap[parent(i)];
                 // check if a swap is needed by comparing frequencies
-                if (bubbleNode.frequency > currParent.frequency) {
-                    // swap the index and its lower frequency parent
+                if (bubbleNode.frequency < currParent.frequency) {
+                    // swap the index and its higher frequency parent
                     heap[parent(i)] =  bubbleNode;
                     heap[i] = currParent;
                     // recurse
@@ -115,7 +115,7 @@ public class PriorityQueue {
             else if (hasLeft && !hasRight) {
                 Node left = heap[leftIdx];
                 // if the left child is greater
-                if (left.frequency > bubbleNode.frequency) {
+                if (left.frequency < bubbleNode.frequency) {
                     // swap the element with its left child
                     heap[i] = left;
                     heap[leftIdx] = bubbleNode;
@@ -128,7 +128,7 @@ public class PriorityQueue {
             else if (!hasLeft && hasRight) {
                 Node right = heap[rightIdx];
                 // if the right child is greater
-                if (right.frequency > bubbleNode.frequency) {
+                if (right.frequency < bubbleNode.frequency) {
                     // swap the element with its right child
                     heap[i] = right;
                     heap[rightIdx] = bubbleNode;
@@ -141,7 +141,7 @@ public class PriorityQueue {
             else if (hasLeft && hasRight) {
                 // find the index of the higher frequency child
                 int higherFrequencyChildIdx = left(i);
-                if (heap[right(i)].frequency > heap[left(i)].frequency) {
+                if (heap[right(i)].frequency < heap[left(i)].frequency) {
                     higherFrequencyChildIdx = right(i);
                 }
 
@@ -149,7 +149,7 @@ public class PriorityQueue {
                 Node child = heap[higherFrequencyChildIdx];
 
                 // check if a swap is needed by comparing frequencies
-                if (bubbleNode.frequency < child.frequency) {
+                if (bubbleNode.frequency > child.frequency) {
                     // swap the index with its child of higher frequency
                     heap[higherFrequencyChildIdx] =  bubbleNode;
                     heap[i] = child;
@@ -251,7 +251,7 @@ public class PriorityQueue {
      * This constructor initializes the pQueue variable to an empty heap. It
      * also sets the size variable to 0, reflecting the emptiness of the queue.
      */
-        pQueue = new MaxHeap();
+        pQueue = new MinHeap();
         size = 0;
     }
 
@@ -342,7 +342,7 @@ public class PriorityQueue {
      * @param   none
      * @return  void
      */
-        pQueue = new MaxHeap();
+        pQueue = new MinHeap();
         size = 0;
     }
 
