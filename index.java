@@ -62,7 +62,7 @@ public class index {
         return fileString.length() * 8;
     }
 
-    public int outputSize(EncodingList eList) {
+    public static int outputSize(EncodingList eList) {
     /**
      * This function determines the size of the output by adding together the
      * number of characters, the frequency of each character, and the frequency
@@ -110,7 +110,8 @@ public class index {
             System.out.println("Encoded Sequence: " + encoding);
 
             // determine the size of the encoding
-            //////////
+            int outputSize = outputSize(tree.encodingList);
+            System.out.println("Output Size: " + outputSize);
 
             // generate the GUI
             //////////
