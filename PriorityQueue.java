@@ -114,7 +114,7 @@ public class PriorityQueue {
             // if the element only has a left child
             else if (hasLeft && !hasRight) {
                 Node left = heap[leftIdx];
-                // if the left child is greater
+                // if the left child is smaller
                 if (left.frequency < bubbleNode.frequency) {
                     // swap the element with its left child
                     heap[i] = left;
@@ -127,7 +127,7 @@ public class PriorityQueue {
             // if the element only has a right child
             else if (!hasLeft && hasRight) {
                 Node right = heap[rightIdx];
-                // if the right child is greater
+                // if the right child is smaller
                 if (right.frequency < bubbleNode.frequency) {
                     // swap the element with its right child
                     heap[i] = right;
@@ -139,18 +139,18 @@ public class PriorityQueue {
 
             // if the element has two children
             else if (hasLeft && hasRight) {
-                // find the index of the higher frequency child
+                // find the index of the lower frequency child
                 int higherFrequencyChildIdx = left(i);
                 if (heap[right(i)].frequency < heap[left(i)].frequency) {
                     higherFrequencyChildIdx = right(i);
                 }
 
-                // get the higher frequency child
+                // get the lower frequency child
                 Node child = heap[higherFrequencyChildIdx];
 
                 // check if a swap is needed by comparing frequencies
                 if (bubbleNode.frequency > child.frequency) {
-                    // swap the index with its child of higher frequency
+                    // swap the index with its child of lower frequency
                     heap[higherFrequencyChildIdx] =  bubbleNode;
                     heap[i] = child;
                     // recurse
