@@ -8,7 +8,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class index<K, V> {
+public class index {
 
     static String fileString = "";
 
@@ -64,7 +64,7 @@ public class index<K, V> {
         //////////
     }
 
-    public int outputSize(Huffman<K,V> tree, String code) {
+    public int outputSize(Huffman tree, String code) {
     /**
      * This function determines the size of the output by finding the size of
      * the Huffman tree and the encoded sequence
@@ -76,7 +76,7 @@ public class index<K, V> {
         return 0;
     }
 
-    public String decode(Huffman<K,V> tree, String code) {
+    public String decode(Huffman tree, String code) {
     /**
      * This function decodes the Huffman tree using the given code. It creates
      * a string representing the final decoded value, which should match the
@@ -108,7 +108,7 @@ public class index<K, V> {
             System.out.println("Input Size: " + inputSize);
 
             // create the huffman tree
-            Huffman tree = new Huffman<>();
+            Huffman tree = new Huffman();
             tree.buildTree(pQueue);
             //System.out.println("Huffman Tree: " + tree);
 

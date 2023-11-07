@@ -1,4 +1,4 @@
-public class Huffman<K,V> {
+public class Huffman {
     
     private Node root = null;
 
