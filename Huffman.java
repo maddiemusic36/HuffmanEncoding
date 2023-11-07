@@ -1,12 +1,6 @@
 public class Huffman<K,V> {
     
-    private int size;
-    private Node root;
-
-    Huffman() {
-        this.size = 0;
-        this.root = null;
-    }
+    private Node root = null;
 
     public void buildTree(PriorityQueue pQueue) throws Exception {
     /**
@@ -32,8 +26,8 @@ public class Huffman<K,V> {
             pQueue.enqueue(cur);
         }
 
+        // set the root to the newly created tree
         root = pQueue.dequeue();
-
     }
     
     ///// function to create the encoding \\\\\
@@ -59,5 +53,3 @@ class Node {
     }
 }
 
-
-// once more
