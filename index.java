@@ -1,16 +1,16 @@
-/**
- * This project ____
- * Authors: Madeline DeLeon, Billy Dolny, Savannah Rabasa, Julia Ryan
-*/
-
 // for file reading
 import java.io.File;
 import java.io.FileNotFoundException;
-//import java.util.PriorityQueue;
 import java.util.Scanner;
 
 public class index {
+/**
+ * This class is used for testing our implementation of Huffman Encoding. It
+ * contains a handful of functions our implementation needs as well as a test()
+ * and a main() function to run testcases.
+ */
 
+    // index instance variable
     static String fileString = "";
 
     public static PriorityQueue organizeInput(String filename, String content) throws FileNotFoundException {
@@ -62,10 +62,6 @@ public class index {
         return fileString.length() * 8;
     }
 
-    public void createTree() {
-        //////////
-    }
-
     public int outputSize(Huffman tree, String code) {
     /**
      * This function determines the size of the output by finding the size of
@@ -76,19 +72,6 @@ public class index {
      */
         //////////
         return 0;
-    }
-
-    public String decode(Huffman tree, String code) {
-    /**
-     * This function decodes the Huffman tree using the given code. It creates
-     * a string representing the final decoded value, which should match the
-     * input data
-     * Args: 
-     *      tree, which is a Huffman object
-     *      code, which is a string representing the encoded input data
-     */
-        /////////
-        return "";
     }
 
     public static void test(String filename) {
@@ -115,10 +98,11 @@ public class index {
             System.out.println("Huffman Tree: " + tree.printTree(tree.root));
 
             // create the encoding
-            /////////
             tree.createEncodingList();
             System.out.println("Encoding List: " + tree.encodingList.toString());
-            
+            String encoding = tree.encode(fileString);
+            System.out.println("Encoded Sequence: " + encoding);
+
             // determine the size of the encoding and the tree
             //////////
         }
