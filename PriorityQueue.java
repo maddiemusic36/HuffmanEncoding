@@ -169,10 +169,10 @@ public class PriorityQueue {
          */
             // resize the array to twice its size if necessary
             if ( (size + 1) >= heap.length) { resize(2 * heap.length); }
-            size++;
             // add the new element to the end of the array and bubble it up
             heap[size] = n;
             bubbleUp(size);
+            size++;
         }
 
         public void resize(int capacity) {
@@ -236,9 +236,9 @@ public class PriorityQueue {
          */
             String s = "{";
             // iterate through the heap
-            for (int i = 1; i <= size; i++) {
+            for (int i = 0; i <= size; i++) {
                 // add a comma before the next value unless it's the first element
-                s += (i == 1 ? "" : ", ") + heap[i];
+                s += (i == 0 ? "" : ", ") + heap[i];
             }
             s += "}";
             return s;
@@ -308,6 +308,9 @@ public class PriorityQueue {
      */
         // loop through the heap
         for (Node n : pQueue.heap) {
+            if (n == null){
+                return null;
+            }
             if (n.key == c) {
                 return n;
             }

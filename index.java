@@ -10,6 +10,8 @@ import java.util.Scanner;
 
 public class index<K, V> {
 
+    static String fileString = "";
+
     public static PriorityQueue organizeInput(String filename, String content) throws FileNotFoundException {
     /**
      * This function reads in the text from the given file, counts the
@@ -37,13 +39,14 @@ public class index<K, V> {
                 Node maybe = pQueue.find(letter);
                 // check if the character already exists in the queue
                 if (maybe == null)
-                    pQueue.enqueue(new Node(letter, 0));
+                    pQueue.enqueue(new Node(letter, 1));
                 else { maybe.frequency++;}
             }
         }
 
         // close the file
         myReader.close();
+        fileString = content;
         return pQueue;
     }
 
@@ -94,7 +97,7 @@ public class index<K, V> {
      * Returns: None
      */
         try {
-            String fileString = "";
+            fileString = "";
 
             // read the input file and convert the data into a priority queue
             PriorityQueue pQueue = organizeInput(filename, fileString);
@@ -123,7 +126,7 @@ public class index<K, V> {
     public static void main(String[] args) {
         String[] testList = {"1", "2", "3"};
         for (int i=0; i<testList.length; i++) {
-            String curTest = "test" + testList[i];
+            String curTest = "test" + testList[i] + ".txt";
             test(curTest);
         }
     }
