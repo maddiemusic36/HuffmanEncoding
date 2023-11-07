@@ -62,17 +62,22 @@ public class index {
         return fileString.length() * 8;
     }
 
-    public int outputSize(Huffman tree, String code) {
+    public int outputSize(EncodingList eList) {
     /**
      * This function determines the size of the output by adding together the
      * number of characters, the frequency of each character, and the frequency
      * of each character times the length of that character's encoding
-     * Args:
-     *      
+     * Args: eList, which is an EncodingList object
      * Returns: an integer representing the size of the output
      */
-        //////////
-        return 0;
+        int character = eList.pqSize * 8;
+        int frequency = 0;
+        int size = 0;
+        for (int i=0; i<eList.pqSize; i++) {
+            frequency += eList.list[i].frequency;
+            size += (eList.list[i].frequency * eList.list[i].encoding.length());
+        }
+        return character + frequency + size;
     }
 
     public static void test(String filename) {

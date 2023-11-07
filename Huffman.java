@@ -66,9 +66,9 @@ public class Huffman {
      */
         // if a leaf node is found
     	if (currNode.right == null && currNode.left == null) {
-            // add a new EncodeNode node to the encoding list
-    		EncodeNode addToArray = new EncodeNode(currNode.key, traversal);
-    		encodingList.add(addToArray);
+            // add the current node to the encoding list
+            currNode.encoding = traversal;
+    		encodingList.add(currNode);
     		return;
     	}
     	
@@ -156,6 +156,7 @@ class Node {
     // node instance variables
     char key;
     int frequency;
+    String encoding;
     Node left;
     Node right;
 
@@ -191,7 +192,7 @@ class EncodingList {
  */
 
     // encoding list instance variables
-	EncodeNode[] list;
+	Node[] list;
 	int currIndex;
 	int pqSize;
 	
@@ -200,12 +201,12 @@ class EncodingList {
      * This constructor initalizes the list to a primitive list of the given size.
      * Args: pqSize, which is an integer indicating the size of the encoding list
      */
-		list = new EncodeNode[pqSize];
+		list = new Node[pqSize];
 		currIndex = 0;
 		this.pqSize = pqSize;
 	}
 	
-	public void add(EncodeNode node) {
+	public void add(Node node) {
     /**
      * This method adds a new value to the encoding list.
      * Args: node, which is an EncodeNode object to be added
@@ -229,36 +230,5 @@ class EncodingList {
 		}
 		return result;
 	}
-}
-
-
-///////////
-class EncodeNode {
-/**
- * This class represents an encode node, which contains a key and an encoding
- */
-
-    // encode node instance variables
-	char key;
-	String encoding;
-	
-	EncodeNode(char key, String encoding) {
-    /**
-     * This constructor initializes the class variables to the given values.
-     * Args: key, which is a character
-     *       encoding, which is a string
-     */
-		this.key = key;
-		this.encoding = encoding;
-	}
-	
-	public String toString() {
-    /**
-     * This method creates a string representation of the encode node
-     * Args: None
-     * Returns: a string displaying the key and encoding of the EncodeNode
-     */
-        return "(" + key + ", " + encoding + ")";
-    }
 }
 
