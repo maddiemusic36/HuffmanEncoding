@@ -8,42 +8,6 @@ public class Huffman<K,V> {
         this.root = null;
     }
 
-    public void insertNode(Node newNode, Node cur) {
-    /**
-     * This method recursively inserts a node into the Huffman tree.
-     * Args: newNode, which is the Node object to be inserted
-     * Returns: None
-     */
-        // check if the tree is empty
-        if (cur == null) { cur = newNode; }
-
-        // otherwise, check the frequencies to determine the location
-        else {
-            // if the new frequency is less than the current frequency
-            if (newNode.frequency <= cur.frequency) {
-                // check if the current node has a left child
-                if (cur.left == null) {
-                    cur.left = newNode;
-                }
-                else {
-                    // recurse on the left child
-                    insertNode(newNode, cur.left);
-                }
-            }
-            // if the new frequency is greater than the current frequency
-            if (newNode.frequency > cur.frequency) {
-                // check if the current node has a right child
-                if (cur.right == null) {
-                    cur.right = newNode;
-                }
-                else {
-                    // recurse on the right child
-                    insertNode(newNode, cur.right);
-                }
-            }
-        }
-    }
-
     public void buildTree(PriorityQueue pQueue) throws Exception {
     /**
      * This method builds the Huffman tree using a PriorityQueue of Nodes of
@@ -64,12 +28,12 @@ public class Huffman<K,V> {
             cur.left = least;
             cur.right = secLeast;
 
-            // add the new frequency to the tree
-            insertNode(cur, root);
-
             // add the new frequency back into the priority queue
             pQueue.enqueue(cur);
         }
+
+        root = pQueue.dequeue();
+
     }
     
     ///// function to create the encoding \\\\\
