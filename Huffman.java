@@ -16,16 +16,17 @@ public class Huffman {
             Node secLeast = pQueue.dequeue();
 
             // creaty an "empty" node whose frequency is the sum of the smallest
-            Node cur = new Node(null, least.frequency + secLeast.frequency);
+            int newFrequency = least.frequency + secLeast.frequency;
+            Node cur = new Node('\0', newFrequency);
             
-            // make cur the parents of the two smallest
+            // make cur the parent of the two smallest
             cur.left = least;
             cur.right = secLeast;
 
             // add the new frequency back into the priority queue
             pQueue.enqueue(cur);
         }
-        
+
         // set the root to the newly created tree
         root = pQueue.dequeue();
     }
@@ -33,17 +34,23 @@ public class Huffman {
     ///// function to create the encoding \\\\\
 
     
-    public String toString() {
+    public String toString(Node cur) {
     /**
      * This method recusively creates a String visualization of the Huffman Tree.
      * Args: None
      * Returns: a string representation of the tree
      */
         // base case
-        if (root == null) { return null;}
-        
-        String str = String.format("(%d\n %d  %d)", root.frequency, 
-                            root.left, root.right);
+        if (cur == null) { return "null"; }
+
+        String str = cur + " {";
+        // recurse left
+        str += toString(cur.left);
+        str += "} {";
+        // recurse right
+        str += toString(cur.right);
+        str += "}";
+
         return str;
     }
 }

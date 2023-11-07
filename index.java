@@ -106,12 +106,12 @@ public class index {
 
             // determine the size of the input
             int inputSize = inputSize(fileString);
-            //System.out.println("Input Size: " + inputSize);
+            System.out.println("Input Size: " + inputSize);
 
             // create the huffman tree
             Huffman tree = new Huffman();
-            //tree.buildTree(pQueue);
-            //System.out.println("Huffman Tree: " + tree);
+            tree.buildTree(pQueue);
+            System.out.println("Huffman Tree: " + tree.toString(tree.root));
 
             // create the encoding
             /////////
