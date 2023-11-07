@@ -30,7 +30,7 @@ public class PriorityQueue {
          * emptiness of the Heap.
          */
             heap = new Node[26];
-            size = 0; 
+            size = 0;
         }
 
         private int parent(int i) {
@@ -40,7 +40,7 @@ public class PriorityQueue {
          * @param  i  an integer representing the index of a Node in the heap
          * @return    the index of the parent
         */
-            return i/2;
+            return (i-1)/2;
         }
 
         private int left(int i) {
@@ -50,7 +50,7 @@ public class PriorityQueue {
          * @param  i  an integer representing the index of a Node in the heap
          * @return    the index of the left child
          */
-            return 2*i;
+            return (2*i) + 1;
         }
 
         private int right(int i) {
@@ -60,7 +60,7 @@ public class PriorityQueue {
          * @param  i  an integer representing the index of a Node in the heap
          * @return    the index of the right child
          */
-            return (2*i + 1);
+            return (2*i) + 2;
         }
 
         private void bubbleUp(int i) {
@@ -73,7 +73,7 @@ public class PriorityQueue {
          * @return    void
          */
             // check that the index is not the top of the heap
-            if (i > 1) {
+            if (i > 0) {
                 Node bubbleNode = heap[i];
                 Node currParent = heap[parent(i)];
                 // check if a swap is needed by comparing frequencies
@@ -98,15 +98,15 @@ public class PriorityQueue {
          */
             Node bubbleNode = heap[i];
 
-            // check for a left child (left = 2i)
+            // check for a left child (left = 2i + 2)
             boolean hasLeft = false;
             int leftIdx = left(i);
-            if (leftIdx >= size && leftIdx < 1) { hasLeft = true; }
+            if (leftIdx < size && leftIdx > 0) { hasLeft = true; }
 
-            // check for a right child (right = 2i + 1)
+            // check for a right child (right = 2i + 2)
             boolean hasRight = false;
             int rightIdx = right(i);
-            if (rightIdx >= size && rightIdx < 1) { hasRight = true; }
+            if (rightIdx < size && rightIdx > 0) { hasRight = true; }
 
             // if the element has no children
             if (!hasLeft && !hasRight) { return; }
@@ -140,21 +140,21 @@ public class PriorityQueue {
             // if the element has two children
             else if (hasLeft && hasRight) {
                 // find the index of the lower frequency child
-                int higherFrequencyChildIdx = left(i);
+                int lowerFrequencyChildIdx = left(i);
                 if (heap[right(i)].frequency < heap[left(i)].frequency) {
-                    higherFrequencyChildIdx = right(i);
+                    lowerFrequencyChildIdx = right(i);
                 }
 
                 // get the lower frequency child
-                Node child = heap[higherFrequencyChildIdx];
+                Node child = heap[lowerFrequencyChildIdx];
 
                 // check if a swap is needed by comparing frequencies
                 if (bubbleNode.frequency > child.frequency) {
                     // swap the index with its child of lower frequency
-                    heap[higherFrequencyChildIdx] =  bubbleNode;
+                    heap[lowerFrequencyChildIdx] =  bubbleNode;
                     heap[i] = child;
                     // recurse
-                    bubbleDown(higherFrequencyChildIdx);
+                    bubbleDown(lowerFrequencyChildIdx);
                 }
             }
         }
@@ -168,7 +168,7 @@ public class PriorityQueue {
          * @return    void
          */
             // resize the array to twice its size if necessary
-            if ( (size + 1) >= heap.length) { resize(2 * heap.length); }
+            if ( size >= heap.length) { resize(2 * heap.length); }
             // add the new element to the end of the array and bubble it up
             heap[size] = n;
             bubbleUp(size);
@@ -206,13 +206,14 @@ public class PriorityQueue {
             if (isEmpty()) { return null; }
 
             // get the Node that will be removed from the top of the heap
-            Node removed = heap[1];
+            Node removed = heap[0];
             // move the largest index (lowest priority) to the top
-            heap[1] =  heap[size];
-            heap[size] = null;
             size--;
+            heap[0] =  heap[size];
+            heap[size] = null;
+
             // bubble down the heap to rearrange the values where necessary
-            bubbleDown(1);
+            bubbleDown(0);
             return removed;
         }
 
@@ -236,7 +237,7 @@ public class PriorityQueue {
          */
             String s = "{";
             // iterate through the heap
-            for (int i = 0; i <= size; i++) {
+            for (int i = 0; i < size; i++) {
                 // add a comma before the next value unless it's the first element
                 s += (i == 0 ? "" : ", ") + heap[i];
             }
@@ -298,7 +299,7 @@ public class PriorityQueue {
         else { throw new NullPointerException(); }
     }
 
-    public Node find(char c) {
+    public int find(char c) {
     /**
      * This method searches through the heap looking for a Node with the
      * given key. If the Node is found, it retuns it. Otherwise, the method
@@ -307,16 +308,33 @@ public class PriorityQueue {
      * Returns: the Node object in the heap with the given character
      */
         // loop through the heap
-        for (Node n : pQueue.heap) {
-            if (n == null){
-                return null;
-            }
-            if (n.key == c) {
-                return n;
-            }
+        for (int i=0; i<pQueue.size; i++) {
+            Node n = pQueue.heap[i];
+            if (n == null){ return -1; }
+            if (n.key == c) { return i; }
         }
         // if it was not found, return null
-        return null;
+        return -1;
+    }
+
+    public void incrementPriority(int index) {
+    /**
+     * This method changes the frequency of the Node in the queue at the
+     * given index. It updates the frequency, then bubbles that node up in
+     * the queue to maintain the queue order.
+     * @param  index    the index of the Node whose frequency we want to update
+     * @return          void
+     */
+        // get the indicated node
+        Node updateNode = pQueue.heap[index];
+
+        // update the node's frequency
+        int newFrequency = updateNode.frequency + 1;
+        updateNode.frequency = newFrequency;
+
+        // bubble up the node
+        pQueue.bubbleDown(index);
+
     }
 
     boolean isEmpty() {

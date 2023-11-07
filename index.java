@@ -36,11 +36,12 @@ public class index {
             // loop through every character in the current line
             for (int i = 0; i < data.length(); i++){
                 char letter = data.charAt(i);
-                Node maybe = pQueue.find(letter);
+                int found = pQueue.find(letter);
                 // check if the character already exists in the queue
-                if (maybe == null)
+                if (found == -1)
                     pQueue.enqueue(new Node(letter, 1));
-                else { maybe.frequency++;}
+                else
+                    pQueue.incrementPriority(found);
             }
         }
 
@@ -105,11 +106,11 @@ public class index {
 
             // determine the size of the input
             int inputSize = inputSize(fileString);
-            System.out.println("Input Size: " + inputSize);
+            //System.out.println("Input Size: " + inputSize);
 
             // create the huffman tree
             Huffman tree = new Huffman();
-            tree.buildTree(pQueue);
+            //tree.buildTree(pQueue);
             //System.out.println("Huffman Tree: " + tree);
 
             // create the encoding
@@ -119,7 +120,7 @@ public class index {
             //////////
         }
         catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -128,6 +129,7 @@ public class index {
         for (int i=0; i<testList.length; i++) {
             String curTest = "test" + testList[i] + ".txt";
             test(curTest);
+            System.out.println();
         }
     }
 }
