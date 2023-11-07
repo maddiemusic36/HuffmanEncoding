@@ -9,7 +9,9 @@ import java.io.FileNotFoundException;
 //import java.util.PriorityQueue;
 import java.util.Scanner;
 
-public class index<K, V> {
+public class index {
+
+    static String fileString = "";
 
     public static PriorityQueue organizeInput(String filename, String content) throws FileNotFoundException {
     /**
@@ -35,16 +37,18 @@ public class index<K, V> {
             // loop through every character in the current line
             for (int i = 0; i < data.length(); i++){
                 char letter = data.charAt(i);
-                Node maybe = pQueue.find(letter);
+                int found = pQueue.find(letter);
                 // check if the character already exists in the queue
-                if (maybe == null)
-                    pQueue.enqueue(new Node(letter, 0));
-                else { maybe.frequency++;}
+                if (found == -1)
+                    pQueue.enqueue(new Node(letter, 1));
+                else
+                    pQueue.incrementPriority(found);
             }
         }
 
         // close the file
         myReader.close();
+        fileString = content;
         return pQueue;
     }
 
@@ -62,7 +66,7 @@ public class index<K, V> {
         //////////
     }
 
-    public int outputSize(Huffman<K,V> tree, String code) {
+    public int outputSize(Huffman tree, String code) {
     /**
      * This function determines the size of the output by finding the size of
      * the Huffman tree and the encoded sequence
@@ -74,7 +78,7 @@ public class index<K, V> {
         return 0;
     }
 
-    public String decode(Huffman<K,V> tree, String code) {
+    public String decode(Huffman tree, String code) {
     /**
      * This function decodes the Huffman tree using the given code. It creates
      * a string representing the final decoded value, which should match the
@@ -95,7 +99,7 @@ public class index<K, V> {
      * Returns: None
      */
         try {
-            String fileString = "";
+            fileString = "";
 
             // read the input file and convert the data into a priority queue
             PriorityQueue pQueue = organizeInput(filename, fileString);
@@ -103,11 +107,11 @@ public class index<K, V> {
 
             // determine the size of the input
             int inputSize = inputSize(fileString);
-            System.out.println("Input Size: " + inputSize);
+            //System.out.println("Input Size: " + inputSize);
 
             // create the huffman tree
-            Huffman tree = new Huffman<>();
-            tree.buildTree(pQueue);
+            Huffman tree = new Huffman();
+            //tree.buildTree(pQueue);
             //System.out.println("Huffman Tree: " + tree);
 
             // create the encoding
@@ -117,16 +121,16 @@ public class index<K, V> {
             //////////
         }
         catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 
     public static void main(String[] args) {
         String[] testList = {"1", "2", "3"};
         for (int i=0; i<testList.length; i++) {
-        	// added + .txt
             String curTest = "test" + testList[i] + ".txt";
             test(curTest);
+            System.out.println();
         }
     }
 }

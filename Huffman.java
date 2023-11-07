@@ -1,6 +1,6 @@
-public class Huffman<K,V> {
+public class Huffman {
     
-    private Node root = null;
+    public Node root = null;
 
     public void buildTree(PriorityQueue pQueue) throws Exception {
     /**
@@ -25,13 +25,14 @@ public class Huffman<K,V> {
             // add the new frequency back into the priority queue
             pQueue.enqueue(cur);
         }
-
+        
         // set the root to the newly created tree
         root = pQueue.dequeue();
     }
     
     ///// function to create the encoding \\\\\
     
+
 
     ///// function to print the tree \\\\\
     public void printTree() {
@@ -58,6 +59,22 @@ public class Huffman<K,V> {
     			currNode = currNode.right;
     	}
     	return result;
+
+    }
+    
+    public String toString() {
+    /**
+     * This method recusively creates a String visualization of the Huffman Tree.
+     * Args: None
+     * Returns: a string representation of the tree
+     */
+        // base case
+        if (root == null) { return null;}
+        
+        String str = String.format("(%d\n %d  %d)", root.frequency, 
+                            root.left, root.right);
+        return str;
+
     }
 }
 
