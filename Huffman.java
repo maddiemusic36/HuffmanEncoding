@@ -39,8 +39,6 @@ public class Huffman {
         root = pQueue.dequeue();
     }
     
-
-    ///// function to create the encoding list \\\\\
     public void createEncodingList() {
     /**
      * This method creates a list of all of the encoded sequences for each
@@ -48,7 +46,6 @@ public class Huffman {
      * Args: None
      * Returns: None
      */
-
     	String traversal = "";
     	Node currNode = root;
         // list whose size is the number of unique characters in the input
@@ -94,7 +91,7 @@ public class Huffman {
      * Args: string, which is the input data to be encoded
      * Returns: a string of 1s and 0s representing the encoded input
      */
-
+        //////////
         return "";
     }
     

@@ -64,11 +64,12 @@ public class index {
 
     public int outputSize(Huffman tree, String code) {
     /**
-     * This function determines the size of the output by finding the size of
-     * the Huffman tree and the encoded sequence
+     * This function determines the size of the output by adding together the
+     * number of characters, the frequency of each character, and the frequency
+     * of each character times the length of that character's encoding
      * Args:
-     *      tree, which is a Huffman object
-     *      code, which is a string representing the encoded input data
+     *      
+     * Returns: an integer representing the size of the output
      */
         //////////
         return 0;
@@ -103,7 +104,10 @@ public class index {
             String encoding = tree.encode(fileString);
             System.out.println("Encoded Sequence: " + encoding);
 
-            // determine the size of the encoding and the tree
+            // determine the size of the encoding
+            //////////
+
+            // generate the GUI
             //////////
         }
         catch (Exception e) {
