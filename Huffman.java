@@ -1,6 +1,8 @@
 public class Huffman {
     
     public Node root = null;
+    public int pqSize;
+    public EncodingList encodingList;
 
     public void buildTree(PriorityQueue pQueue) throws Exception {
     /**
@@ -9,13 +11,14 @@ public class Huffman {
      * Args: pQueue, which is a PriorityQueue instance
      * Returns: None
      */
+    	pqSize = pQueue.size();
         // loop through the whole priority queue
         while (pQueue.size() > 1) {
             // get the current two smallest frequencies
             Node least = pQueue.dequeue();
             Node secLeast = pQueue.dequeue();
 
-            // creaty an "empty" node whose frequency is the sum of the smallest
+            // create an "empty" node whose frequency is the sum of the smallest
             int newFrequency = least.frequency + secLeast.frequency;
             Node cur = new Node('\0', newFrequency);
             
@@ -31,8 +34,31 @@ public class Huffman {
         root = pQueue.dequeue();
     }
     
-    ///// function to create the encoding \\\\\
+    ///// function to create the encoding list \\\\\
+    public void createEncodingList() {
+    	String traversal = "";
+    	Node currNode = root;
+    	encodingList = new EncodingList(pqSize);
+    	
+    	createEncodingListHelper(traversal, currNode);
+    	//encodingList.printList();
+    }
     
+    private void createEncodingListHelper(String traversal, Node currNode) {
+    	if (currNode.right == null && currNode.left == null) {
+    		EncodeNode addToArray = new EncodeNode(currNode.key, traversal);
+    		encodingList.add(addToArray);
+    		return;
+    	}
+    		
+    	traversal += "0";
+    	createEncodingListHelper(traversal, currNode.left);
+    	traversal = traversal.substring(0, traversal.length() - 1);
+    	
+    	traversal += "1";
+    	createEncodingListHelper(traversal, currNode.right);
+    	traversal = traversal.substring(0, traversal.length() - 1);
+    }
 
 
     ///// function to print the tree \\\\\
@@ -85,6 +111,8 @@ public class Huffman {
     }
 }
 
+
+
 class Node {
     char key;
     int frequency;
@@ -100,6 +128,52 @@ class Node {
 
     public String toString() {
         return "(" + key + ", " + frequency + ")";
+    }
+}
+
+class EncodingList {
+	EncodeNode[] list;
+	int currIndex;
+	int pqSize;
+	
+	EncodingList(int pqSize) {
+		list = new EncodeNode[pqSize];
+		currIndex = 0;
+		this.pqSize = pqSize;
+	}
+	
+	public void add(EncodeNode node) {
+		list[currIndex] = node;
+		currIndex++;
+	}
+	
+	public void printList() {
+		for (int i = 0; i < pqSize; i++) {
+			System.out.println(list[i].key +" "+ list[i].encoding);
+		}
+	}
+	
+	@Override
+	public String toString() {
+		String result = "";
+		for (int i = 0; i < pqSize; i++) {
+			result += (list[i].key + ": " + list[i].encoding + " // ");
+		}
+		return result;
+	}
+}
+
+class EncodeNode {
+	char key;
+	String encoding;
+	
+	EncodeNode(char key, String encoding) {
+		this.key = key;
+		this.encoding = encoding;
+	}
+	
+	public String toString() {
+        return "(" + key + ", " + encoding + ")";
     }
 }
 

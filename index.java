@@ -116,7 +116,9 @@ public class index {
 
             // create the encoding
             /////////
-
+            tree.createEncodingList();
+            System.out.println("Encoding List: " + tree.encodingList.toString());
+            
             // determine the size of the encoding and the tree
             //////////
         }
