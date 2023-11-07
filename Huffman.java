@@ -1,5 +1,10 @@
 public class Huffman {
+/**
+ * This class represents a Huffman tree, or a tree whose nodes are organized
+ * by frequency to help with the compression of data.
+ */
     
+    // huffman instance variables
     public Node root = null;
     public int pqSize;
     public EncodingList encodingList;
@@ -37,41 +42,59 @@ public class Huffman {
 
     ///// function to create the encoding list \\\\\
     public void createEncodingList() {
+    /**
+     * This method creates a list of all of the encoded sequences for each
+     * unique character in the input file. 
+     * Args: None
+     * Returns: None
+     */
+
     	String traversal = "";
     	Node currNode = root;
+        // list whose size is the number of unique characters in the input
     	encodingList = new EncodingList(pqSize);
     	
     	createEncodingListHelper(traversal, currNode);
-    	//encodingList.printList();
     }
     
     private void createEncodingListHelper(String traversal, Node currNode) {
+    /**
+     * This method creates a list of all encoded sequences for each unique
+     * character in the input file. It does this using recursive backtracking
+     * to find each leaf node. When a leaf node is found, it adds the current
+     * sequence to the list of encoded sequences.
+     * Args: traversal, which is the current encoded sequence
+     *       currNode, which is the current node in the tree
+     * Returns: None
+     */
+        // if a leaf node is found
     	if (currNode.right == null && currNode.left == null) {
+            // add a new EncodeNode node to the encoding list
     		EncodeNode addToArray = new EncodeNode(currNode.key, traversal);
     		encodingList.add(addToArray);
     		return;
     	}
-    		
+    	
+        // traverse left
     	traversal += "0";
     	createEncodingListHelper(traversal, currNode.left);
     	traversal = traversal.substring(0, traversal.length() - 1);
     	
+        // traverse right
     	traversal += "1";
     	createEncodingListHelper(traversal, currNode.right);
     	traversal = traversal.substring(0, traversal.length() - 1);
     }
 
-
-    ///// function to print the tree \\\\\
-    public void printTree() {
-    	
-    }
-
     public String encode(String string) {
     /**
      * This method creates the encoding of the given string using the Huffman
-     * tree. It does this by ____
+     * tree. It does this by looping through the given string, finding the 
+     * associated encoding sequence, and adding that to the final string.
+     * Args: string, which is the input data to be encoded
+     * Returns: a string of 1s and 0s representing the encoded input
      */
+
         return "";
     }
     
@@ -111,7 +134,7 @@ public class Huffman {
      * Returns: a string representation of the tree
      */
         // base case
-        if (cur == null) { return "null"; }
+        if (cur == null) { return ""; }
 
         String str = cur + " {";
         // recurse left
@@ -126,14 +149,26 @@ public class Huffman {
 }
 
 
-
+///////////
 class Node {
+/**
+ * This class represents a node, which contains a key, a frequency, a left
+ * pointer, and a right pointer.
+ */
+
+    // node instance variables
     char key;
     int frequency;
     Node left;
     Node right;
 
     Node(Character key, Integer value) {
+    /**
+     * This constructor initializes an instance of Node. It assigns the given
+     * key/value pair to the key and frequency, and sets the pointers to null.
+     * Args: key, which is a character
+     *       value, which is an integer
+     */
         this.key = key;
         this.frequency = value;
         this.left = null;
@@ -141,34 +176,56 @@ class Node {
     }
 
     public String toString() {
+    /**
+     * This method creates a string representation of the node
+     * Args: None
+     * Returns: a string displaying the key and frequency of the node
+     */
         return "(" + key + ", " + frequency + ")";
     }
 }
 
+
+///////////
 class EncodingList {
+/**
+ * This class represents an encoding list, which is a primitive list of
+ * EncodeNode objects
+ */
+
+    // encoding list instance variables
 	EncodeNode[] list;
 	int currIndex;
 	int pqSize;
 	
 	EncodingList(int pqSize) {
+    /**
+     * This constructor initalizes the list to a primitive list of the given size.
+     * Args: pqSize, which is an integer indicating the size of the encoding list
+     */
 		list = new EncodeNode[pqSize];
 		currIndex = 0;
 		this.pqSize = pqSize;
 	}
 	
 	public void add(EncodeNode node) {
+    /**
+     * This method adds a new value to the encoding list.
+     * Args: node, which is an EncodeNode object to be added
+     * Returns: None
+     */
 		list[currIndex] = node;
 		currIndex++;
 	}
 	
-	public void printList() {
-		for (int i = 0; i < pqSize; i++) {
-			System.out.println(list[i].key +" "+ list[i].encoding);
-		}
-	}
-	
 	@Override
 	public String toString() {
+    /**
+     * This method creates a string representation of the encoding list
+     * Args: None
+     * Returns: a string displaying the key and encoding of each EncodeNode
+     *          in the list
+     */
 		String result = "";
 		for (int i = 0; i < pqSize; i++) {
 			result += (list[i].key + ": " + list[i].encoding + " // ");
@@ -177,16 +234,33 @@ class EncodingList {
 	}
 }
 
+
+///////////
 class EncodeNode {
+/**
+ * This class represents an encode node, which contains a key and an encoding
+ */
+
+    // encode node instance variables
 	char key;
 	String encoding;
 	
 	EncodeNode(char key, String encoding) {
+    /**
+     * This constructor initializes the class variables to the given values.
+     * Args: key, which is a character
+     *       encoding, which is a string
+     */
 		this.key = key;
 		this.encoding = encoding;
 	}
 	
 	public String toString() {
+    /**
+     * This method creates a string representation of the encode node
+     * Args: None
+     * Returns: a string displaying the key and encoding of the EncodeNode
+     */
         return "(" + key + ", " + encoding + ")";
     }
 }
