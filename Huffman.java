@@ -32,7 +32,36 @@ public class Huffman {
     }
     
     ///// function to create the encoding \\\\\
+    
 
+
+    ///// function to print the tree \\\\\
+    public void printTree() {
+    	
+    }
+    
+    // function to decode
+    public String decode(String string) {
+    	String result = "";
+    	Node currNode = root;
+    	
+    	// iterate through input string
+    	for (int i = 0; i < string.length(); i++) {
+    		// if we reach a leaf, add char to result and go back to top of tree
+    		if (currNode.left == null && currNode.right == null) {
+    			result += currNode.key;
+    			currNode = root;
+    		}
+    		// if string[i] = 0, go left
+    		else if (string.charAt(i) == '0')
+    			currNode = currNode.left;
+    		// if string[i] = 1, go right
+    		else 
+    			currNode = currNode.right;
+    	}
+    	return result;
+
+    }
     
     public String toString(Node cur) {
     /**
@@ -52,6 +81,7 @@ public class Huffman {
         str += "}";
 
         return str;
+
     }
 }
 
