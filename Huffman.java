@@ -31,17 +31,22 @@ public class Huffman {
         root = pQueue.dequeue();
     }
     
-    ///// function to create the encoding \\\\\
-    
-
-
-    ///// function to print the tree \\\\\
-    public void printTree() {
-    	
+    public String encode(String string) {
+    /**
+     * This method creates the encoding of the given string using the Huffman
+     * tree. It does this by ____
+     */
+        return "";
     }
     
-    // function to decode
     public String decode(String string) {
+    /**
+     * This method decodes the Huffman tree using the given encoding. It
+     * traverses left for every 0, and right for every 1. If a leaf node is
+     * reached, it adds the key of that node to the final result.
+     * Args: string, which is a string of 1s and 0s
+     * Returns: the decoded string
+     */
     	String result = "";
     	Node currNode = root;
     	
@@ -59,11 +64,11 @@ public class Huffman {
     		else 
     			currNode = currNode.right;
     	}
+        
     	return result;
-
     }
     
-    public String toString(Node cur) {
+    public String printTree(Node cur) {
     /**
      * This method recusively creates a String visualization of the Huffman Tree.
      * Args: None
@@ -74,14 +79,13 @@ public class Huffman {
 
         String str = cur + " {";
         // recurse left
-        str += toString(cur.left);
+        str += printTree(cur.left);
         str += "} {";
         // recurse right
-        str += toString(cur.right);
+        str += printTree(cur.right);
         str += "}";
 
         return str;
-
     }
 }
 

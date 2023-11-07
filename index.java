@@ -112,7 +112,7 @@ public class index {
             // create the huffman tree
             Huffman tree = new Huffman();
             tree.buildTree(pQueue);
-            System.out.println("Huffman Tree: " + tree.toString(tree.root));
+            System.out.println("Huffman Tree: " + tree.printTree(tree.root));
 
             // create the encoding
             /////////
