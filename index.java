@@ -10,6 +10,7 @@
 // for file reading
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.PriorityQueue;
 import java.util.Scanner;
 
 
@@ -18,14 +19,14 @@ public class index<K, V> {
     public void organizeInput(String filename) throws FileNotFoundException {
     /**
      * This function reads in the text from the given file, counts the
-     * frequency of each character, and creates a priority queue of said
+     * frequency of each character, and creates a min priority queue of said
      * frequencies.
      * Args: filename, which is a string representing the name of a file
      * Returns: ______
      */
         File myFile = new File(filename);
         Scanner myReader;
-            myReader = new Scanner(myFile);
+        myReader = new Scanner(myFile);
         while (myReader.hasNextLine()) {
             String data = myReader.nextLine();
             for (int i = 0; i < data.length(); i++){
