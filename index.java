@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class index<K, V> {
 
-    public PriorityQueue organizeInput(String filename, String content) throws FileNotFoundException {
+    public static PriorityQueue organizeInput(String filename, String content) throws FileNotFoundException {
     /**
      * This function reads in the text from the given file, counts the
      * frequency of each character, and creates a priority queue of said
@@ -47,7 +47,7 @@ public class index<K, V> {
         return pQueue;
     }
 
-    public int inputSize(String fileString) {
+    public static int inputSize(String fileString) {
     /**
      * This function determines the size of the input by counting the
      * characters. Each character occupies 8 bits, including whitespace.
@@ -86,7 +86,7 @@ public class index<K, V> {
         return "";
     }
 
-    public void test(String filename) {
+    public static void test(String filename) {
     /**
      * This method is used for testing our implementation. It runs through the
      * entire process and displays any relevant information.
@@ -98,12 +98,16 @@ public class index<K, V> {
 
             // read the input file and convert the data into a priority queue
             PriorityQueue pQueue = organizeInput(filename, fileString);
+            System.out.println("Priority Queue: " + pQueue);
 
             // determine the size of the input
             int inputSize = inputSize(fileString);
+            System.out.println("Input Size: " + inputSize);
 
             // create the huffman tree
-            /////////
+            Huffman tree = new Huffman<>();
+            tree.buildTree(pQueue);
+            //System.out.println("Huffman Tree: " + tree);
 
             // create the encoding
             /////////
@@ -113,6 +117,14 @@ public class index<K, V> {
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    public static void main(String[] args) {
+        String[] testList = {"1", "2", "3"};
+        for (int i=0; i<testList.length; i++) {
+            String curTest = "test" + testList[i];
+            test(curTest);
         }
     }
 }
