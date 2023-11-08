@@ -95,7 +95,7 @@ public class Huffman {
        for (int i = 0; i < string.length(); i++) {
     	   result += encodingList.getEncoding(string.charAt(i));
        }
-        return result;
+       return result;
     }
     
     public String decode(String string) {
@@ -220,6 +220,11 @@ class EncodingList {
 	}
 	
 	public String getEncoding(char givenChar) {
+	/**
+	 * This method returns the encoding for the given character.
+	 * Args: givenChar, which is a char from the string to be encoded.
+	 * Returns: the encoded string for the character
+	 */
 		String encoding = "NOT FOUND";
 		for (int i = 0; i < pqSize; i++) {
 			if (list[i].key == givenChar) {
