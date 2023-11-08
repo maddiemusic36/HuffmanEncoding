@@ -91,8 +91,11 @@ public class Huffman {
      * Args: string, which is the input data to be encoded
      * Returns: a string of 1s and 0s representing the encoded input
      */
-        //////////
-        return "";
+       String result = "";
+       for (int i = 0; i < string.length(); i++) {
+    	   result += encodingList.getEncoding(string.charAt(i));
+       }
+        return result;
     }
     
     public String decode(String string) {
@@ -214,6 +217,16 @@ class EncodingList {
      */
 		list[currIndex] = node;
 		currIndex++;
+	}
+	
+	public String getEncoding(char givenChar) {
+		String encoding = "NOT FOUND";
+		for (int i = 0; i < pqSize; i++) {
+			if (list[i].key == givenChar) {
+				encoding = list[i].encoding;
+			}
+		}
+		return encoding;
 	}
 	
 	@Override
