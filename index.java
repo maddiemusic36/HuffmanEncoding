@@ -92,6 +92,7 @@ public class index {
 
             // read the input file and convert the data into a priority queue
             PriorityQueue pQueue = organizeInput(filename, fileString);
+            System.out.println("Input file: " + fileString);
             System.out.println("Priority Queue: " + pQueue);
 
             // determine the size of the input
@@ -122,7 +123,7 @@ public class index {
     }
 
     public static void main(String[] args) {
-        String[] testList = {"1", "2", "3"};
+        String[] testList = {"-2", "-1", "0"};
         for (int i=0; i<testList.length; i++) {
             String curTest = "test" + testList[i] + ".txt";
             test(curTest);
