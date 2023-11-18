@@ -113,15 +113,90 @@ public class index {
             // determine the size of the encoding
             int outputSize = outputSize(tree.encodingList);
             System.out.println("Output Size: " + outputSize);
-
-            // generate the GUI
-            //////////
         }
         catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    public static void implementHuffman_GUI(String txtInput, Map<String, String> setOutputs) {
+        /**
+         * This method is called to test input that is given by the
+         * user of the GUI. It creates a Huffman tree and "runs through the
+         * entire process and displays any relevant information" in a very
+         * similar manner to test() function. 
+         * 
+         * Parameters:   txtInput(String) - the string that is given by the user (FROM GUI)
+         *               setOutputs(Map<String,String>) - the dictionary of outputs to track
+         * Returns:      Nothing, only prints to the console.
+         */
+        try {
+            fileString = "";
+
+            // get the text input and create a priority queue
+            PriorityQueue pQueue = organizeInputFromGUI(txtInput, fileString);
+            // txtInput is txt.getText() (AKA the current value typed in the text field)
+            System.out.println("Priority Queue: " + pQueue);
+
+            // input size:
+            int inputSize = fileString.length() * 8;
+            setOutputs.put("input size", Integer.toString(inputSize));
+            System.out.println("Input Size: " + inputSize);
+
+            // create the huffman tree
+            Huffman tree = new Huffman();
+            tree.buildTree(pQueue);
+            setOutputs.put("huff tree", tree.printTree(tree.root));
+            System.out.println("Huffman Tree: " + tree.printTree(tree.root));
+
+            // create the encoding
+            tree.createEncodingList();
+            System.out.println("Encoding List: " + tree.encodingList.toString());
+            setOutputs.put("encoding list", tree.encodingList.toString());
+
+            String encoding = tree.encode(fileString);
+            setOutputs.put("encoding", encoding);
+            System.out.println("Encoded Sequence: " + encoding);
+
+            // determine the size of the encoding
+            int outputSize = outputSize(tree.encodingList);
+            System.out.println("Output Size: " + outputSize);
+            setOutputs.put("out size", Integer.toString(outputSize));
+        }
+        catch (Exception e) {
+            System.out.println("\n\nERROR.\n\n");
+            e.printStackTrace();
+        }
+    }
+
+    public static PriorityQueue organizeInputFromGUI(String txtInput, String content) throws FileNotFoundException {
+        /**
+         * This function is an imitation of organizeInput() but for the
+         * input of the GUI, which is just a string of text rather than
+         * a text file. 
+         * 
+         * Args: filename, which is a string representing the name of a file
+         * Returns: a PriorityQueue object which holds every character and their
+         *          frequencies from the given file
+         */
+            // priority queue to hold Nodes
+            PriorityQueue pQueue = new PriorityQueue();
+            content += txtInput;
+
+            // loop through every character in the current line
+            for (int i = 0; i < txtInput.length(); i++){
+                char letter = txtInput.charAt(i);
+                int found = pQueue.find(letter);
+                // check if the character already exists in the queue
+                if (found == -1)
+                    pQueue.enqueue(new Node(letter, 1));
+                else
+                    pQueue.incrementPriority(found);
+            }
+            fileString = content;
+            return pQueue;
+    }
+    
     public static void main(String[] args) {
         String[] testList = {"-2", "-1", "0"};
         for (int i=0; i<testList.length; i++) {
@@ -129,5 +204,6 @@ public class index {
             test(curTest);
             System.out.println();
         }
+        GUI_DataEntry.makeGUI();
     }
 }
