@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.swing.*;
 import java.awt.Color;
 import java.awt.event.*;
+import java.util.Map;
 import java.util.HashMap;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionListener;
