@@ -9,7 +9,6 @@ import java.util.Map;
 import javax.swing.*;
 import java.awt.Color;
 import java.awt.event.*;
-import java.util.Map;
 import java.util.HashMap;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionListener;
@@ -86,7 +85,7 @@ public class GUI_DataEntry{
                 System.out.println("\n\nAbout to convent Huffman Encode the following text input from user: " + txt.getText() + "\n");
 
                 Map<String, String> huffResults = new HashMap<String, String>();
-                index.implementHuffman_GUI(txt.getText().strip(), huffResults);
+                index.implementHuffman_GUI(txt.getText(), huffResults);
             }
         });
         downy.setBorder(new EmptyBorder(10, 10, 10, 10)); 
